@@ -1,0 +1,37 @@
+.store-container {
+  margin: 0 auto;
+  
+  .product-grid-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .pagination-bar {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .pagination-bar button {
+    padding: 10px 25px;
+    background: #ff6f61;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .pagination-bar button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .page-indicator {
+    font-weight: 600;
+    color: #555;
+  }
+}

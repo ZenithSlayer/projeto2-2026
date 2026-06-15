@@ -1,0 +1,11 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  padding: 20px;
+  background: #f1f5f9;
+  width: 100%;
+  min-height: 80vh;
+}

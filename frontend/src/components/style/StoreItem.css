@@ -1,0 +1,50 @@
+.store-item {
+  flex: 1;
+  max-width: 350px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 5px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+  }
+
+  h3 {
+    margin: 15px 0 5px 0;
+  }
+
+  .description {
+    font-size: 14px;
+    color: #555;
+  }
+
+  .price {
+    font-weight: bold;
+    margin: 10px 0;
+    color: #ff6f61;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #ff6f61;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+}
+
+.store-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}

@@ -1,0 +1,27 @@
+{
+  "name": "projeto2-2026",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "husky",
+    "test:e2e": "echo 'Rodando testes E2E... (sucesso automático por enquanto)' && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZenithSlayer/projeto2-2026.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ZenithSlayer/projeto2-2026/issues"
+  },
+  "homepage": "https://github.com/ZenithSlayer/projeto2-2026#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^21.0.2",
+    "@commitlint/config-conventional": "^21.0.2",
+    "husky": "^9.1.7"
+  }
+}

@@ -1,4 +1,4 @@
-const apiUrl = "http://localhost:3001";
+const apiUrl = "https://214K.local/api";
 const getToken = () => localStorage.getItem("token");
 
 const authHeaders = () => ({

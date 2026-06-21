@@ -1,5 +1,4 @@
 const mysql = require('mysql2/promise');
-const { faker } = require('@faker-js/faker');
 require('dotenv').config();
 
 const CONFIG = {
@@ -12,6 +11,9 @@ const CONFIG = {
 };
 
 async function main() {
+  const { faker } = await import('@faker-js/faker');
+
+  console.log("Connecting to the database...");
   const connection = await mysql.createConnection({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
@@ -20,6 +22,7 @@ async function main() {
     database: process.env.DB_NAME,
   });
 
+  console.log("Clearing old tables...");
   await connection.query('SET FOREIGN_KEY_CHECKS = 0');
   const tables = ['cart', 'order_items', 'orders', 'credit_cards', 'addresses', 'product_categories', 'products', 'categories', 'users'];
   for (const table of tables) {
@@ -27,6 +30,7 @@ async function main() {
   }
   await connection.query('SET FOREIGN_KEY_CHECKS = 1');
 
+  console.log("Generating users...");
   const users = [];
   for (let i = 0; i < CONFIG.USERS; i++) {
     users.push([
@@ -39,6 +43,7 @@ async function main() {
   }
   await connection.query(`INSERT INTO users (name, email, password, cpf, is_admin) VALUES ?`, [users]);
 
+  console.log("Generating categories...");
   const categories = [];
   const uniqueCategoryNames = new Set();
   while (uniqueCategoryNames.size < CONFIG.CATEGORIES) {
@@ -53,6 +58,7 @@ async function main() {
   }
   await connection.query(`INSERT INTO categories (name, description) VALUES ?`, [categories]);
 
+  console.log("Generating products...");
   const products = [];
   for (let i = 0; i < CONFIG.PRODUCTS; i++) {
     products.push([
@@ -66,6 +72,7 @@ async function main() {
   }
   await connection.query(`INSERT INTO products (admin_id, name, description, price, is_deleted, image_url) VALUES ?`, [products]);
 
+  console.log("Linking products to categories...");
   const productCategories = [];
   for (let i = 1; i <= CONFIG.PRODUCTS; i++) {
     const numCategories = faker.number.int({ min: 1, max: 3 });
@@ -79,6 +86,7 @@ async function main() {
   }
   await connection.query(`INSERT IGNORE INTO product_categories (product_id, category_id) VALUES ?`, [productCategories]);
 
+  console.log("Generating addresses and credit cards...");
   const addresses = [];
   const creditCards = [];
   for (let i = 1; i <= CONFIG.USERS; i++) {
@@ -95,6 +103,7 @@ async function main() {
   await connection.query(`INSERT INTO addresses (user_id, country, state, city, street, number, is_favorite, postal_code) VALUES ?`, [addresses]);
   await connection.query(`INSERT INTO credit_cards (user_id, card_number, security_code, expiration_date, is_favorite) VALUES ?`, [creditCards]);
 
+  console.log("Generating orders...");
   const orders = [];
   for (let i = 1; i <= CONFIG.ORDERS; i++) {
     orders.push([
@@ -105,6 +114,7 @@ async function main() {
   }
   const [orderRes] = await connection.query(`INSERT INTO orders (user_id, total, status) VALUES ?`, [orders]);
   
+  console.log("Generating order items...");
   const orderItems = [];
   for (let i = 0; i < CONFIG.ORDERS; i++) {
     const orderId = orderRes.insertId + i;
@@ -117,6 +127,7 @@ async function main() {
   }
   await connection.query(`INSERT INTO order_items (order_id, product_id, quantity, price) VALUES ?`, [orderItems]);
 
+  console.log("Generating cart items...");
   const cartItems = [];
   for (let i = 0; i < CONFIG.CART_ITEMS; i++) {
     cartItems.push([
@@ -128,8 +139,10 @@ async function main() {
   await connection.query(`INSERT INTO cart (user_id, product_id, quantity) VALUES ?`, [cartItems]);
 
   await connection.end();
+  console.log("Database populated successfully!");
 }
 
 main().catch(err => {
+  console.error("Fatal error during seeding:", err);
   process.exit(1);
 });

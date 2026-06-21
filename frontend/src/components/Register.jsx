@@ -79,7 +79,7 @@ const Register = ({ setToast }) => {
         cpf: form.cpf.replace(/\D/g, ""),
       };
 
-      const response = await fetch("http://localhost:3001/users/register", {
+      const response = await fetch("https://214K.local/api/users/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

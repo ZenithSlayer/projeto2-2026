@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 const CartContext = createContext();
 export const useCart = () => useContext(CartContext);
 
-const API_URL = "http://localhost:3001/cart";
+const API_URL = "https://214K.local/api/cart";
 const getToken = () => localStorage.getItem("token");
 
 export const CartProvider = ({ children }) => {

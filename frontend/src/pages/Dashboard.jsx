@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDashboardData } from "../hooks/useDashboardData"; 
+import { useDashboardData } from "../hooks/useDashboardData";
 import { AddressPanel } from "../components/Dashboard/Panels/AddressPanel";
 import { CardPanel } from "../components/Dashboard/Panels/CardPanel";
 import { ProductPanel } from "../components/Dashboard/Panels/ProductPanel";
@@ -11,19 +11,19 @@ const Dashboard = ({ setToast }) => {
   const { data, setData, loading } = useDashboardData(setToast);
   const [activeTab, setActiveTab] = useState("account");
 
-  if (loading) return <div className="container">Loading Dashboard...</div>;
+  if (loading || !data) return <div className="container">Loading Dashboard...</div>;
 
   const tabs = ["account", "orders", "addresses", "cards"];
-  if (data.user?.is_admin) tabs.push("products");
+  if (data?.user?.is_admin) tabs.push("products");
 
   const renderActivePanel = () => {
     const props = { data, setData, setToast };
     switch (activeTab) {
-      case "account":   return <AccountPanel {...props} />;
+      case "account": return <AccountPanel {...props} />;
       case "addresses": return <AddressPanel {...props} />;
-      case "cards":     return <CardPanel {...props} />;
-      case "products":  return <ProductPanel {...props} />;
-      default:          return <OrderPanel orders={data.orders} />;
+      case "cards": return <CardPanel {...props} />;
+      case "products": return <ProductPanel {...props} />;
+      default: return <OrderPanel orders={data?.orders || []} />;
     }
   };
 

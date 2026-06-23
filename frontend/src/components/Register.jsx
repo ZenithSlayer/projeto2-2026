@@ -105,10 +105,10 @@ const Register = ({ setToast }) => {
     <form onSubmit={handleSubmit} noValidate>
       <h2>Register</h2>
 
-      <input name="name" placeholder="Name" onChange={handleChange} />
-      <input name="email" placeholder="Email" onChange={handleChange} />
-      <input name="password" placeholder="Password" type="password" onChange={handleChange} />
-      <input name="cpf" placeholder="CPF" onChange={handleChange} />
+      <input name="name" placeholder="Name" value={form.name} onChange={handleChange} />
+      <input name="email" placeholder="Email" value={form.email} onChange={handleChange} />
+      <input name="password" placeholder="Password" value={form.password} type="password" onChange={handleChange} />
+      <input name="cpf" placeholder="CPF" value={form.cpf} onChange={handleChange} />
 
       <button type="submit">Register</button>
     </form>
